@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using MyDigitalKey.Services.Contracts.Interfaces;
 using MyDigitalKey.Services.Contracts.Models;
 
-namespace MyDigitalKey.Web.Controllers
+namespace MyDigitalKey.Web.Controllers.Api
 {
     [Produces("application/json")]
-    [Route("api/UserApi")]
+    [Route("api/user")]
     public class UserApiController : Controller
     {
         private readonly IUserService userService;
@@ -16,14 +16,14 @@ namespace MyDigitalKey.Web.Controllers
             this.userService = userService;
         }
 
-        // GET api/users
+        // GET api/user
         [HttpGet]
         public IEnumerable<UserDto> Get()
         {
             return userService.FindAll();
         }
 
-        // POST api/values
+        // POST api/user
         [HttpPost]
         public void Post([FromBody] UserDto user)
         {
