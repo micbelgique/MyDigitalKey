@@ -16,15 +16,12 @@ namespace MyDigitalKey.Services
         {
             this.mapper = mapper;
             this.userRepository = userRepository;
+
+            CreateSampleUser();
         }
 
         public IEnumerable<UserDto> FindAll()
         {
-            userRepository.Add(User.Create("Bocken", "Augustin"));
-            userRepository.Add(User.Create("Linon", "Barbara"));
-            userRepository.Add(User.Create("Quinet", "Romain"));
-            userRepository.Add(User.Create("Nguyen", "Duy"));
-
             return mapper.Map<IEnumerable<UserDto>>(userRepository.FindAll());
         }
 
@@ -38,6 +35,14 @@ namespace MyDigitalKey.Services
             }
 
             userRepository.Add(user);
+        }
+
+        private void CreateSampleUser()
+        {
+            userRepository.Add(User.Create("Bocken", "Augustin"));
+            userRepository.Add(User.Create("Linon", "Barbara"));
+            userRepository.Add(User.Create("Quinet", "Romain"));
+            userRepository.Add(User.Create("Nguyen", "Duy"));
         }
     }
 }

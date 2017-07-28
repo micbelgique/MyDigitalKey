@@ -9,7 +9,8 @@ namespace MyDigitalKey.Web.AutoMapper
         {
             return new List<Profile>()
             {
-                new UserMapperConfig()
+                new UserMapperConfig(),
+                new LockMapperConfig()
             };
         }
     }
