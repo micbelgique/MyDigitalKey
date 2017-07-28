@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Authorization;
+using System;
 using Microsoft.AspNetCore.Mvc;
+using MyDigitalKey.Services.Contracts.Interfaces;
 
 namespace MyDigitalKey.Web.Controllers.Api
 {
@@ -12,6 +13,13 @@ namespace MyDigitalKey.Web.Controllers.Api
         public AuthorizationController(IAuthorizationService authorizationService)
         {
             this.authorizationService = authorizationService;
+        }
+
+        // GET api/isauthorized
+        [HttpGet]
+        public bool IsAuthorized(int digitalKeyBusinessId, Guid lockId)
+        {
+            return authorizationService.IsAuthorized(digitalKeyBusinessId, lockId);
         }
     }
 }

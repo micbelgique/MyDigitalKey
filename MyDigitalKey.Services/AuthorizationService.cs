@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using MyDigitalKey.Domain.Interfaces;
 using MyDigitalKey.Domain.Models;
 using MyDigitalKey.Services.Contracts.Interfaces;
@@ -14,6 +15,11 @@ namespace MyDigitalKey.Services
         {
             this.mapper = mapper;
             this.authorizationRepository = authorizationRepository;
+        }
+
+        public bool IsAuthorized(int digitalKeyBusinessId, Guid lockId)
+        {
+            return true;
         }
     }
 }
