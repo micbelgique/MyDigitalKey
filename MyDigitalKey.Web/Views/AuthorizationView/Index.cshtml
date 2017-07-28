@@ -1,7 +1,36 @@
-
+@model MyDigitalKey.Web.Models.ViewModels.AuthorizationsViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Authorizations";
 }
 
-<h2>Index</h2>
+<h2>Authorizations</h2>
 
+
+<table>
+    <tr>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Lock Name</td>
+        <td>Can Open ?</td>
+        <td/>
+    </tr>
+    <tr/>
+    <tr>
+        <td>@Html.DropDownListFor(m=>m.SelectedUserName, Model.UserNames,"Select User")</td>
+        <td></td>
+        <td>@Html.DropDownListFor(m=>m.SelectedLockName,Model.LockNames,"Select Lock")</td>
+        <td>@Html.CheckBoxFor(m=>m.CanOpen)</td>
+        <td />
+    </tr>
+    <tr/>
+    @foreach (var Authorization in Model.Authorizations)
+    {
+        <tr>
+            <td>@Authorization.UserDto.FirstName</td>
+            <td>@Authorization.UserDto.LastName</td>
+            <td>@Authorization.Lock.Name</td>
+            <td>@Html.CheckBoxFor(m=>Authorization.CanOpen)</td>
+            <td/>
+        </tr>
+    }
+</table>
