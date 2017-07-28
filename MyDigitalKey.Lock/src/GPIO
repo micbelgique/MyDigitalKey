@@ -1,0 +1,9 @@
+Yellow  - 1     - 3.3v
+Black   - 6     - Ground
+White   - 24    - SDA
+Gray    - 23    - SCK
+Purple  - 19    - MOSI
+Blue    - 21    - MISO
+Green   - 22    - RST
+Orange  - 18    - IRQ
+Brown   - 12    - RELAY_CTL

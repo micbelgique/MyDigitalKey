@@ -19,6 +19,7 @@ namespace MyDigitalKey.Web.Controllers.Api
         [HttpGet]
         public bool IsAuthorized(int digitalKeyBusinessId, Guid lockId)
         {
+            Console.WriteLine("HAHAHAHAH");
             return authorizationService.IsAuthorized(digitalKeyBusinessId, lockId);
         }
     }
