@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyDigitalKey.Web.Controllers
+namespace MyDigitalKey.Mvc.Controllers
 {
     public class HomeController : Controller
     {
