@@ -20,7 +20,14 @@ namespace MyDigitalKey.Web.Controllers
         [HttpGet]
         public IEnumerable<UserDto> Get()
         {
-            return userService.GetAll();
+            return userService.FindAll();
+        }
+
+        // POST api/values
+        [HttpPost]
+        public void Post([FromBody] UserDto user)
+        {
+            userService.Add(user);
         }
     }
 }

@@ -5,6 +5,8 @@ namespace MyDigitalKey.Services.Contracts.Interfaces
 {
     public interface IUserService
     {
-        IEnumerable<UserDto> GetAll();
+        IEnumerable<UserDto> FindAll();
+
+        void Add(UserDto user);
     }
 }

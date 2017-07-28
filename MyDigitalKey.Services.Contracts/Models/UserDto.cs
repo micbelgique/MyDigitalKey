@@ -7,6 +7,6 @@ namespace MyDigitalKey.Services.Contracts.Models
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DigitalKeyDto Keys { get; set; }
+        public DigitalKeyDto Key { get; set; }
     }
 }
