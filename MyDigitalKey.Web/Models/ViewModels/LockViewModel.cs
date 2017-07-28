@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace MyDigitalKey.Web.Models.ViewModels
 {
-    public class UserViewModel
+    public class LockViewModel
     {
-        public UserViewModel()
+        public LockViewModel()
         {
-            User = new UserDto();
+            Lock = new LockDto();
         }
-        public string ResearchString { get; set; }
-        public UserDto User { get; set; }
+        public LockDto Lock { get; set; }
     }
 }

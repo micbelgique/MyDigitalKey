@@ -8,6 +8,7 @@ using System.Net.Http;
 using MyDigitalKey.Web.Models;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using MyDigitalKey.Services.Contracts.Models;
 
 namespace MyDigitalKey.Web.Controllers
 {
