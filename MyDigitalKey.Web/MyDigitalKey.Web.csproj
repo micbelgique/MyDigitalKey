@@ -25,4 +25,9 @@
     <ProjectReference Include="..\MyDigitalKey.Services.Contracts\MyDigitalKey.Services.Contracts.csproj" />
     <ProjectReference Include="..\MyDigitalKey.Services\MyDigitalKey.Services.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\LockView\" />
+    <Folder Include="Views\AuthorizationView\" />
+    <Folder Include="Views\UserView\" />
+  </ItemGroup>
 </Project>

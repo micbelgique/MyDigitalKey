@@ -1,0 +1,60 @@
+@model MyDigitalKey.Web.Models.ViewModels.UserViewModel
+@{
+    ViewData["Title"] = "User";
+    
+}
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <div class="jumbotron">
+                <h1>Users</h1>
+            </div>
+        </div>
+        <div class="row">
+            @using (Html.BeginForm())
+            {   
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.ResearchString)
+                </div>
+                <div class="col-md-3">
+                        <input type="submit" value="Search" class="btn btn-default center-block"/>
+                </div>
+            }
+        </div>
+        @foreach (string name in ViewBag.Names)
+        {
+            <div class="row">
+                @Html.ActionLink(name,"Details","UserView",new { name},null)
+            </div>
+        }
+        <div class="row">
+            <input type="submit" value="Create New" class="btn btn-default center-block" />
+        </div>
+    </div>
+    <div class="col-md-9">
+        <br/>
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.User.FirstName)
+                    @Html.TextBoxFor(m => m.User.FirstName)
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.User.LastName)
+                    @Html.TextBoxFor(m => m.User.LastName)
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.User.Key)
+                    @Html.DisplayTextFor(m => m.User.Key)
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Save Changes" class="btn btn-default pull-right" /> 
+            </div>
+        }
+        
+    </div>
+</div>
+
+

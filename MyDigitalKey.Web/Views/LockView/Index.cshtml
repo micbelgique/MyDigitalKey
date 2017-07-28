@@ -1,0 +1,45 @@
+@model MyDigitalKey.Web.Models.ViewModels.LockViewModel
+@{
+    ViewData["Title"] = "Lock";
+
+}
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <div class="jumbotron">
+                <h1>Locks</h1>
+            </div>
+        </div>
+        
+        @foreach (string name in ViewBag.LocksName)
+        {
+            <div class="row">
+                @Html.ActionLink(name, "Details", "LockView", new { name }, null)
+            </div>
+        }
+        <div class="row">
+            <input type="submit" value="Create New" class="btn btn-default center-block" />
+        </div>
+    </div>
+    <div class="col-md-9">
+        <br />
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Lock.Name)
+                    @Html.TextBoxFor(m => m.Lock.Name)
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Lock.Id)
+                    @Html.DisplayTextFor(m => m.Lock.Id)
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Save Changes" class="btn btn-default pull-right" />
+            </div>
+        }
+
+    </div>
+</div>
+
