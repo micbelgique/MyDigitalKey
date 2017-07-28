@@ -32,7 +32,7 @@ namespace MyDigitalKey.Services
 
         public void Add(AuthorizationDto authorizationDto)
         {
-            var authorization = Authorization.Create(authorizationDto.DigitalKey.BusinessId, authorizationDto.Lock.Id);
+            var authorization = Authorization.Create(authorizationDto.User.Key.BusinessId, authorizationDto.Lock.Id);
             authorizationRepository.Add(authorization);
         }
 
@@ -44,9 +44,12 @@ namespace MyDigitalKey.Services
                 {
                     Id = Guid.Parse("4edfb100-cef8-4153-ae95-c61082c6ddda")
                 },
-                DigitalKey = new DigitalKeyDto
+                User = new UserDto
                 {
-                    BusinessId = 1
+                    Key = new DigitalKeyDto
+                    {
+                        BusinessId = 1
+                    }
                 },
                 CanOpen = true
             });
@@ -57,9 +60,12 @@ namespace MyDigitalKey.Services
                 {
                     Id = Guid.Parse("2f01b3b2-f7d4-4718-96ea-05fbf6612d5a")
                 },
-                DigitalKey = new DigitalKeyDto
+                User = new UserDto
                 {
-                    BusinessId = 1
+                    Key = new DigitalKeyDto
+                    {
+                        BusinessId = 1
+                    }
                 },
                 CanOpen = false
             });
