@@ -17,7 +17,13 @@
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
-	<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyDigitalKey.Domain\MyDigitalKey.Domain.csproj" />
+    <ProjectReference Include="..\MyDigitalKey.Persistence.InMemory\MyDigitalKey.Persistence.InMemory.csproj" />
+    <ProjectReference Include="..\MyDigitalKey.Services.Contracts\MyDigitalKey.Services.Contracts.csproj" />
+    <ProjectReference Include="..\MyDigitalKey.Services\MyDigitalKey.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\LockView\" />
