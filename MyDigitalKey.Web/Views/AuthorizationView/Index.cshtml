@@ -5,32 +5,59 @@
 
 <h2>Authorizations</h2>
 
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-2">
+            First Name
+        </div>
+        <div class="col-md-2">
+            Last Name
+        </div>
+        <div class="col-md-2">
+            Lock Name
+        </div>
+        <div class="col-md-2">
+            Can Open ?
+        </div>
+        <div class="col-md-2">
 
-<table>
-    <tr>
-        <td>First Name</td>
-        <td>Last Name</td>
-        <td>Lock Name</td>
-        <td>Can Open ?</td>
-        <td/>
-    </tr>
-    <tr/>
-    <tr>
-        <td>@Html.DropDownListFor(m=>m.SelectedUserName, Model.UserNames,"Select User")</td>
-        <td></td>
-        <td>@Html.DropDownListFor(m=>m.SelectedLockName,Model.LockNames,"Select Lock")</td>
-        <td>@Html.CheckBoxFor(m=>m.CanOpen)</td>
-        <td />
-    </tr>
-    <tr/>
-    @foreach (var Authorization in Model.Authorizations)
-    {
-        <tr>
-            <td>@Authorization.UserDto.FirstName</td>
-            <td>@Authorization.UserDto.LastName</td>
-            <td>@Authorization.Lock.Name</td>
-            <td>@Html.CheckBoxFor(m=>Authorization.CanOpen)</td>
-            <td/>
-        </tr>
-    }
-</table>
+        </div>
+    </div>
+    <div class="row">
+        @using (Html.BeginForm())
+        {
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => m.SelectedUserName, Model.UserNames, "Select User")
+            </div>
+            <div class="col-md-2">
+                @Html.DropDownListFor(m => m.SelectedLockName, Model.LockNames, "Select Lock")
+            </div>
+            <div class="col-md-2">
+                @Html.CheckBoxFor(m => m.CanOpen)
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Insert" class="btn btn-default" />
+            </div>
+        }
+    </div>
+@foreach (var Authorization in Model.Authorizations)
+{
+    <div class="row">
+        <div class="col-md-2">
+            @Authorization.User.FirstName
+        </div>
+        <div class="col-md-2">
+            @Authorization.User.LastName
+        </div>
+        <div class="col-md-2">
+            @Authorization.Lock.Name
+        </div>
+        <div class="col-md-2">
+            @Html.CheckBoxFor(m => Authorization.CanOpen)
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+}
+</div>
