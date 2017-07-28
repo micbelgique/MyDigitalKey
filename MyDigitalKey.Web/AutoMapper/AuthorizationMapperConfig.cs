@@ -8,7 +8,18 @@ namespace MyDigitalKey.Web.AutoMapper
     {
         public AuthorizationMapperConfig()
         {
-            CreateMap<Authorization, AuthorizationDto>();
+            CreateMap<Authorization, AuthorizationDto>()
+                .ForMember(m => m.Lock, opt => opt.ResolveUsing(res => new LockDto
+                {
+                    Id = res.LockId
+                }))
+                .ForMember(m => m.User, opt => opt.ResolveUsing(res => new UserDto
+                {
+                    Key = new DigitalKeyDto
+                    {
+                        Id = res.DigitalKeyId
+                    }
+                }));
         }
     }
 }

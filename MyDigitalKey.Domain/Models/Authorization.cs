@@ -5,18 +5,18 @@ namespace MyDigitalKey.Domain.Models
 {
     public class Authorization : IAggregateRoot
     {
-        private Authorization(int digitalKeyId, Guid lockId)
+        private Authorization(Guid digitalKeyId, Guid lockId)
         {
             DigitalKeyId = digitalKeyId;
             LockId = lockId;
             Id = Guid.NewGuid();
         }
 
-        public int DigitalKeyId { get; }
+        public Guid DigitalKeyId { get; }
         public Guid LockId { get; }
         public Guid Id { get; }
 
-        public static Authorization Create(int digitalKeyId, Guid lockId)
+        public static Authorization Create(Guid lockId, Guid digitalKeyId)
         {
             return new Authorization(digitalKeyId, lockId);
         }

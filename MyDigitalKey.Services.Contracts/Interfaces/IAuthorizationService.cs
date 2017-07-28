@@ -6,7 +6,7 @@ namespace MyDigitalKey.Services.Contracts.Interfaces
 {
     public interface IAuthorizationService
     {
-        bool IsAuthorized(int digitalKeyBusinessId, Guid lockId);
+        bool IsAuthorized(Guid lockId, int digitalKeyBusinessId);
         IEnumerable<AuthorizationDto> FindAll();
         void Add(AuthorizationDto authorization);
     }
