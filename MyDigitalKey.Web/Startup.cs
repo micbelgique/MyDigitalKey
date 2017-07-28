@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MyDigitalKey.Domain.Interfaces;
+using MyDigitalKey.Domain.Models;
+using MyDigitalKey.Persistence.InMemory;
+using MyDigitalKey.Services;
+using MyDigitalKey.Services.Contracts.Interfaces;
+using MyDigitalKey.Web.AutoMapper;
 
 namespace MyDigitalKey.Web
 {
@@ -16,8 +18,8 @@ namespace MyDigitalKey.Web
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -28,7 +30,14 @@ namespace MyDigitalKey.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            services.AddSingleton(MappingLoader.Load());
             services.AddMvc();
+
+            // Add application services.
+            services.AddTransient<IUserService, UserService>();
+
+            // Add repositories
+            services.AddTransient<IRepository<User>, MemoryRepository<User>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,8 +61,8 @@ namespace MyDigitalKey.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

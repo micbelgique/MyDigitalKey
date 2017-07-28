@@ -1,7 +1,9 @@
-﻿namespace MyDigitalKey.Domain.Interfaces
+﻿using System;
+
+namespace MyDigitalKey.Domain.Interfaces
 {
     public interface IAggregateRoot
     {
-        int Id { get; }
+        Guid Id { get; }
     }
 }

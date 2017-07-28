@@ -1,30 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyDigitalKey.Domain;
+using System.Linq;
 using MyDigitalKey.Domain.Interfaces;
 
 namespace MyDigitalKey.Persistence.InMemory
 {
     public class MemoryRepository<TEntity> : IRepository<TEntity> where TEntity : IAggregateRoot
     {
-        public TEntity FindById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        protected static List<TEntity> Entities = new List<TEntity>();
 
         public IEnumerable<TEntity> FindAll()
         {
-            throw new NotImplementedException();
+            return Entities;
         }
 
         public void Add(TEntity entity)
         {
-            throw new NotImplementedException();
+            Entities.Add(entity);
         }
 
         public void Remove(TEntity entity)
         {
-            throw new NotImplementedException();
+            Entities.Remove(entity);
+        }
+
+        public TEntity FindById(Guid id)
+        {
+            return Entities.FirstOrDefault(x => x.Id == id);
         }
     }
 }
