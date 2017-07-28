@@ -18,13 +18,12 @@ namespace MyDigitalKey.Web.Controllers.Api
         }
 
         // GET api/authorization
-        [HttpGet()]
-        [Route("{digitalKeyBusinessId}/{lockId}")]
-        public bool IsAuthorized(int digitalKeyBusinessId, Guid lockId)
+        [HttpGet]
+        [Route("{lockId}/{digitalKeyBusinessId}")]
+        public bool IsAuthorized(Guid lockId, int digitalKeyBusinessId)
         {
-            return authorizationService.IsAuthorized(digitalKeyBusinessId, lockId);
+            return authorizationService.IsAuthorized(lockId, digitalKeyBusinessId);
         }
-
 
         // GET api/authorization
         [HttpGet]
