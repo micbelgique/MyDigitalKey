@@ -21,7 +21,7 @@
                 </div>
             }
         </div>
-        @foreach (string name in Model.Usernames)
+        @foreach (string name in ViewBag.Names)
         {
             <div class="row">
                 @Html.ActionLink(name,"Details","UserView",new { name},null)

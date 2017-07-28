@@ -9,12 +9,9 @@ namespace MyDigitalKey.Web.Models.ViewModels
     {
         public UserViewModel()
         {
-            Usernames = new List<string>();
             User = new UserDto();
         }
         public string ResearchString { get; set; }
-        public List<string> Usernames { get; set; }
-
         public UserDto User { get; set; }
     }
 }
