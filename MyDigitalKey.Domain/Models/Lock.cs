@@ -11,13 +11,16 @@ namespace MyDigitalKey.Domain.Models
             Name = name;
         }
 
-        public Guid Id { get; }
         public string Name { get; }
+
+        public Guid Id { get; }
 
         public static Lock Create(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
+            {
                 throw new ArgumentNullException(nameof(name));
+            }
 
             return new Lock(name);
         }

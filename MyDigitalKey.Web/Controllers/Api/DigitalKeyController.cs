@@ -6,11 +6,11 @@ namespace MyDigitalKey.Web.Controllers.Api
 {
     [Produces("application/json")]
     [Route("api/digitalkey")]
-    public class DigitalKeyApiController : Controller
+    public class DigitalKeyController : Controller
     {
         private readonly IDigitalKeyService digitalKeyService;
 
-        public DigitalKeyApiController(IDigitalKeyService digitalKeyService)
+        public DigitalKeyController(IDigitalKeyService digitalKeyService)
         {
             this.digitalKeyService = digitalKeyService;
         }

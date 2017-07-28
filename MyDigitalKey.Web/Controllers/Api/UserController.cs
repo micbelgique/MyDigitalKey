@@ -7,11 +7,11 @@ namespace MyDigitalKey.Web.Controllers.Api
 {
     [Produces("application/json")]
     [Route("api/user")]
-    public class UserApiController : Controller
+    public class UserController : Controller
     {
         private readonly IUserService userService;
 
-        public UserApiController(IUserService userService)
+        public UserController(IUserService userService)
         {
             this.userService = userService;
         }

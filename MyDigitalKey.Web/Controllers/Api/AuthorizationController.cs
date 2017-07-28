@@ -5,11 +5,11 @@ namespace MyDigitalKey.Web.Controllers.Api
 {
     [Produces("application/json")]
     [Route("api/authorization")]
-    public class AuthorizationApiController : Controller
+    public class AuthorizationController : Controller
     {
         private readonly IAuthorizationService authorizationService;
 
-        public AuthorizationApiController(IAuthorizationService authorizationService)
+        public AuthorizationController(IAuthorizationService authorizationService)
         {
             this.authorizationService = authorizationService;
         }
