@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 
-namespace MyDigitaKey.Web
+namespace MyDigitalKey.Web
 {
     public class Program
     {
