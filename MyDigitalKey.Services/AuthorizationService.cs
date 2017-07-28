@@ -62,7 +62,7 @@ namespace MyDigitalKey.Services
                 {
                     Id = Guid.Parse("2f01b3b2-f7d4-4718-96ea-05fbf6612d5a")
                 },
-                User = new User()
+                User = new UserDto()
                 {
                     FirstName = "Thomas",
                     LastName = "D'Hollander",
