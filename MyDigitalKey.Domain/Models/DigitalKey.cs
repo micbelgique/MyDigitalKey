@@ -5,16 +5,16 @@ namespace MyDigitalKey.Domain.Models
 {
     public class DigitalKey : IAggregateRoot
     {
-        private DigitalKey()
+        private DigitalKey(Guid id)
         {
-            Id = Guid.NewGuid();
+            Id = id;
         }
 
         public Guid Id { get; }
 
-        public static DigitalKey Create()
+        public static DigitalKey Create(Guid id)
         {
-            return new DigitalKey();
+            return new DigitalKey(id);
         }
     }
 }

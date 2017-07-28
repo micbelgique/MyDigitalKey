@@ -18,7 +18,7 @@ namespace MyDigitalKey.Services
             this.userRepository = userRepository;
         }
 
-        public IEnumerable<UserDto> GetAll()
+        public IEnumerable<UserDto> FindAll()
         {
             userRepository.Add(User.Create("Bocken", "Augustin"));
             userRepository.Add(User.Create("Linon", "Barbara"));
@@ -26,6 +26,18 @@ namespace MyDigitalKey.Services
             userRepository.Add(User.Create("Nguyen", "Duy"));
 
             return mapper.Map<IEnumerable<UserDto>>(userRepository.FindAll());
+        }
+
+        public void Add(UserDto userDto)
+        {
+            var user = User.Create(userDto.LastName, userDto.FirstName);
+
+            if (userDto.Key != null)
+            {
+                user.SetKey(DigitalKey.Create(userDto.Key.Id));
+            }
+
+            userRepository.Add(user);
         }
     }
 }

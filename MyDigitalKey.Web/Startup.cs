@@ -35,9 +35,14 @@ namespace MyDigitalKey.Web
 
             // Add application services.
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IDigitalKeyService, DigitalKeyService>();
+            services.AddTransient<IAuthorizationService, AuthorizationService>();
 
             // Add repositories
             services.AddTransient<IRepository<User>, MemoryRepository<User>>();
+            services.AddTransient<IRepository<DigitalKey>, MemoryRepository<DigitalKey>>();
+            services.AddTransient<IRepository<Authorization>, MemoryRepository<Authorization>>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
