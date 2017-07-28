@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MyDigitalKey.Web.Models
 {
-    public class Right
+    public class Authorization
     {
         public Guid ID { get; set; }
         public Guid DigitalKeyID { get; set; }
