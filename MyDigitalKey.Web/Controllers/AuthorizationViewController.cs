@@ -69,7 +69,7 @@ namespace MyDigitalKey.Web.Controllers
                     }
                     try
                     {
-                        autho.User = Users.First(m => m.Key.Id == autho.User.Key.Id);
+                        autho.User = Users.First(m => (m.Key!= null) &&  (m.Key.Id == autho.User.Key.Id));
                     }
                     catch (Exception ex)
                     {
@@ -100,6 +100,12 @@ namespace MyDigitalKey.Web.Controllers
             }
             vm.Authorizations = Authorizations;
             return View("Index",vm);
+        }
+
+        public IActionResult Insert(AuthorizationsViewModel model)
+        {
+
+            return Index();
         }
     }
 }
