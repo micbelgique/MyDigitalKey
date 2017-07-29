@@ -14,10 +14,12 @@ namespace MyDigitalKey.Web.Controllers
 {
     public class UserViewController : Controller
     {
+        private IOptions<AppSettings> _optionsAccessor;
         private readonly List<UserDto> users = new List<UserDto>();
 
         public UserViewController(IOptions<AppSettings> optionsAccessor)
         {
+            _optionsAccessor = optionsAccessor;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(optionsAccessor.Value.ApiBaseAddress);
