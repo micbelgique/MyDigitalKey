@@ -8,53 +8,69 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-2">
-            First Name
-        </div>
-        <div class="col-md-2">
-            Last Name
+            Name
         </div>
         <div class="col-md-2">
             Lock Name
         </div>
         <div class="col-md-2">
-            Can Open ?
+            Start Date
         </div>
         <div class="col-md-2">
-
+            End Date
+        </div>
+        <div class="col-md-2">
+            Suspend/Resume
+        </div>
+        <div class="col-md-2">
+            Revoke
         </div>
     </div>
     <div class="row">
         @using (Html.BeginForm())
         {
-            <div class="col-md-4">
+            <div class="col-md-2">
                 @Html.DropDownListFor(m => m.SelectedUserName, Model.UserNames, "Select User")
             </div>
             <div class="col-md-2">
                 @Html.DropDownListFor(m => m.SelectedLockName, Model.LockNames, "Select Lock")
             </div>
             <div class="col-md-2">
-                @Html.CheckBoxFor(m => m.CanOpen)
+                @Html.EditorFor(m=>m.StartDate)
             </div>
             <div class="col-md-2">
-                <input type="submit" value="Insert" class="btn btn-default" />
+                @Html.EditorFor(m => m.EndDate)
+            </div>
+            <div class="col-md-4">
+                <input type="submit" value="Insert" class="btn btn-default"/>
             </div>
         }
     </div>
 @foreach (var Authorization in Model.Authorizations)
 {
-    <div class="row">
+    string style = Authorization.IsActive ? "\"background-color:lightgreen\"" : "\"background-color:lightcoral\"";
+    <div class="row" style=@style>
         <div class="col-md-2">
-            @Authorization.User.FirstName
-        </div>
-        <div class="col-md-2">
-            @Authorization.User.LastName
+            @Authorization.User.FirstName @Authorization.User.LastName
         </div>
         <div class="col-md-2">
             @Authorization.Lock.Name
         </div>
+        <div class="col-md-2">
+            @Authorization.StartDate
+        </div>
        
         <div class="col-md-2">
-
+            @if (Authorization.EndDate.HasValue)
+            {
+                <div>@Authorization.EndDate.Value</div>
+            }
+        </div>
+        <div class="col-md-2">
+            @Html.CheckBoxFor(m=>Authorization.IsActive)
+        </div>
+        <div class="col-md-2">
+            <input type="button" class="btn" name="RevokeButton" value="Revoke"/>
         </div>
     </div>
 }
