@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using MyDigitalKey.Web.Configurations;
 using Microsoft.AspNetCore.Http;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace MyDigitalKey.Web.Controllers
 {
@@ -21,11 +22,13 @@ namespace MyDigitalKey.Web.Controllers
         private List<AuthorizationDto> Authorizations { get; set; }
         private List<UserDto> Users { get; set; }
         private List<LockDto> Locks { get; set; }
+        public string ApiBaseAddress { get; set; }
         public AuthorizationViewController(IOptions<AppSettings> optionsAccessor)
         {
+            ApiBaseAddress = optionsAccessor.Value.ApiBaseAddress;
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(optionsAccessor.Value.ApiBaseAddress);
+                client.BaseAddress = new Uri(ApiBaseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 string response = "";
@@ -158,7 +161,23 @@ namespace MyDigitalKey.Web.Controllers
                     Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
                 }
             }
-
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var rawContent = JsonConvert.SerializeObject(newAuth);
+                HttpContent content = new ByteArrayContent(Encoding.UTF8.GetBytes(rawContent));
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                try
+                {
+                    client.PostAsync("api/authorization", content);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
+                }
+            }
             return Index();
         }
     }
