@@ -20,11 +20,6 @@ namespace MyDigitalKey.Services
             CreateSampleAuthorization();
         }
 
-        public bool IsAuthorized(int digitalKeyBusinessId, Guid lockId)
-        {
-            return true;
-        }
-
         public IEnumerable<AuthorizationDto> FindAll()
         {
             return mapper.Map<IEnumerable<AuthorizationDto>>(authorizationRepository.FindAll());
@@ -32,8 +27,13 @@ namespace MyDigitalKey.Services
 
         public void Add(AuthorizationDto authorizationDto)
         {
-            var authorization = Authorization.Create(authorizationDto.User.Key.BusinessId, authorizationDto.Lock.Id);
+            var authorization = Authorization.Create(authorizationDto.User.Key.Id, authorizationDto.Lock.Id);
             authorizationRepository.Add(authorization);
+        }
+
+        public bool IsAuthorized(Guid lockId, int digitalKeyBusinessId)
+        {
+            return true;
         }
 
         private void CreateSampleAuthorization()
@@ -48,8 +48,9 @@ namespace MyDigitalKey.Services
                 {
                     FirstName = "Fred",
                     LastName = "Carbonelle",
-                    Key = new DigitalKeyDto()
+                    Key = new DigitalKeyDto
                     {
+                        Id = Guid.NewGuid(),
                         BusinessId = 42
                     }
                 },
@@ -62,12 +63,13 @@ namespace MyDigitalKey.Services
                 {
                     Id = Guid.Parse("2f01b3b2-f7d4-4718-96ea-05fbf6612d5a")
                 },
-                User = new UserDto()
+                User = new UserDto
                 {
                     FirstName = "Thomas",
                     LastName = "D'Hollander",
-                    Key = new DigitalKeyDto()
+                    Key = new DigitalKeyDto
                     {
+                        Id = Guid.NewGuid(),
                         BusinessId = 24
                     }
                 },

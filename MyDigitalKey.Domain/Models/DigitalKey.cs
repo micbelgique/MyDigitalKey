@@ -10,11 +10,18 @@ namespace MyDigitalKey.Domain.Models
             Id = id;
         }
 
+        public int BusinessId { get; private set; }
+
         public Guid Id { get; }
 
         public static DigitalKey Create(Guid id)
         {
             return new DigitalKey(id);
+        }
+
+        public void SetBusinessId(int businessId)
+        {
+            BusinessId = businessId;
         }
     }
 }
