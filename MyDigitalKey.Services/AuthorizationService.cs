@@ -27,7 +27,7 @@ namespace MyDigitalKey.Services
 
         public void Add(AuthorizationDto authorizationDto)
         {
-            var authorization = Authorization.Create(authorizationDto.User.Key.Id, authorizationDto.Lock.Id);
+            var authorization = Authorization.Create(authorizationDto.Lock.Id, authorizationDto.User.Key.Id);
             authorizationRepository.Add(authorization);
         }
 
