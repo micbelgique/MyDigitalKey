@@ -15,15 +15,26 @@ namespace MyDigitalKey.Domain.Models
 
         public Guid DigitalKeyId { get; }
         public Guid LockId { get; }
-        public Guid Id { get; }
 
-        public DateTime StartDate { get; private set; }
+        public DateTime StartDate { get; }
         public DateTime EndDate { get; private set; }
         public bool IsActive { get; private set; }
+        public Guid Id { get; }
 
         public static Authorization Create(Guid lockId, Guid digitalKeyId)
         {
             return new Authorization(digitalKeyId, lockId);
+        }
+
+        public void Revoke()
+        {
+            EndDate = DateTime.Now;
+            IsActive = false;
+        }
+
+        public void Suspend()
+        {
+            IsActive = false;
         }
     }
 }

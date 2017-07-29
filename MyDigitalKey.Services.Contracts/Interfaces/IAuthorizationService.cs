@@ -9,5 +9,8 @@ namespace MyDigitalKey.Services.Contracts.Interfaces
         bool IsAuthorized(Guid lockId, int digitalKeyBusinessId);
         IEnumerable<AuthorizationDto> FindAll();
         void Add(AuthorizationDto authorization);
+        void Revoke(Guid authorizationId);
+        void Suspend(Guid authorizationId);
+        void Resume(Guid authorizationId);
     }
 }

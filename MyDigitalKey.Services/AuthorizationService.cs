@@ -31,6 +31,21 @@ namespace MyDigitalKey.Services
             authorizationRepository.Add(authorization);
         }
 
+        public void Revoke(Guid authorizationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Suspend(Guid authorizationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Resume(Guid authorizationId)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsAuthorized(Guid lockId, int digitalKeyBusinessId)
         {
             return true;

@@ -9,6 +9,7 @@ namespace MyDigitalKey.Web.AutoMapper
         public UserMapperConfig()
         {
             CreateMap<User, UserDto>();
+            CreateMap<DigitalKey, DigitalKeyDto>();
         }
     }
 }
