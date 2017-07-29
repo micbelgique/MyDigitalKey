@@ -171,7 +171,7 @@ namespace MyDigitalKey.Web.Controllers
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 try
                 {
-                    client.PostAsync("api/authorization", content);
+                    var result = client.PostAsync("api/authorization", content).Result;
                 }
                 catch (Exception ex)
                 {
