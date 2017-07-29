@@ -36,5 +36,10 @@ namespace MyDigitalKey.Domain.Models
         {
             IsActive = false;
         }
+
+        public void Resume()
+        {
+            IsActive = true;
+        }
     }
 }
