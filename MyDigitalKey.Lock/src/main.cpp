@@ -89,7 +89,6 @@ void loop()
             setColor(0, 0, 0);
             start = 0;
         }
-        return;
     }
 
     if(found)
@@ -102,6 +101,7 @@ void loop()
         }
         else
         {
+            close();
             setColor(255, 0, 0);
         }
     }
