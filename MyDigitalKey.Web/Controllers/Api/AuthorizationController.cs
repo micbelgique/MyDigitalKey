@@ -25,6 +25,13 @@ namespace MyDigitalKey.Web.Controllers.Api
             return authorizationService.IsAuthorized(lockId, digitalKeyBusinessId);
         }
 
+        // POST api/authorization
+        [HttpPost]
+        public void Post([FromBody] AuthorizationDto authorizationDto)
+        {
+            authorizationService.Add(authorizationDto);
+        }
+
         // GET api/authorization
         [HttpGet]
         public IEnumerable<AuthorizationDto> Get()
