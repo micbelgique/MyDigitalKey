@@ -46,12 +46,10 @@ namespace MyDigitalKey.Services
                 },
                 User = new UserDto
                 {
-                    FirstName = "Fred",
-                    LastName = "Carbonelle",
                     Key = new DigitalKeyDto
                     {
-                        Id = Guid.NewGuid(),
-                        BusinessId = 42
+                        Id = Guid.Parse("5a643ecd-c7ac-40fd-a435-9f5e115f8e4e"),
+                        BusinessId = 1
                     }
                 },
                 CanOpen = true
@@ -65,12 +63,10 @@ namespace MyDigitalKey.Services
                 },
                 User = new UserDto
                 {
-                    FirstName = "Thomas",
-                    LastName = "D'Hollander",
                     Key = new DigitalKeyDto
                     {
-                        Id = Guid.NewGuid(),
-                        BusinessId = 24
+                        Id = Guid.Parse("eb01eaa2-8ba9-4469-9d35-747c502b2dd5"),
+                        BusinessId = 2
                     }
                 },
                 CanOpen = false

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using MyDigitalKey.Domain.Interfaces;
 using MyDigitalKey.Domain.Models;
@@ -27,7 +28,7 @@ namespace MyDigitalKey.Services
 
         public void Add(UserDto userDto)
         {
-            var user = User.Create(userDto.LastName, userDto.FirstName);
+            var user = User.Create(Guid.NewGuid(), userDto.LastName, userDto.FirstName);
 
             if (userDto.Key != null)
             {
@@ -39,10 +40,10 @@ namespace MyDigitalKey.Services
 
         private void CreateSampleUser()
         {
-            userRepository.Add(User.Create("Bocken", "Augustin"));
-            userRepository.Add(User.Create("Linon", "Barbara"));
-            userRepository.Add(User.Create("Quinet", "Romain"));
-            userRepository.Add(User.Create("Nguyen", "Duy"));
+            userRepository.Add(User.Create(Guid.Parse("5a643ecd-c7ac-40fd-a435-9f5e115f8e4e"), "Bocken", "Augustin"));
+            userRepository.Add(User.Create(Guid.Parse("9aa51c80-0b93-4a1f-a29b-9cda8e9ca31b"), "Linon", "Barbara"));
+            userRepository.Add(User.Create(Guid.Parse("eb01eaa2-8ba9-4469-9d35-747c502b2dd5"), "Quinet", "Romain"));
+            userRepository.Add(User.Create(Guid.Parse("804e0a22-2bb4-4776-8166-4427600ec7a0"), "Nguyen", "Duy"));
         }
     }
 }
