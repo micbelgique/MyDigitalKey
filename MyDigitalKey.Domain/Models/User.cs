@@ -5,26 +5,35 @@ namespace MyDigitalKey.Domain.Models
 {
     public class User : IAggregateRoot
     {
-        private User(string lastName, string firstName)
+        private User(Guid id, string lastName, string firstName)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             LastName = lastName;
             FirstName = firstName;
         }
 
-        public Guid Id { get; }
         public string FirstName { get; }
         public string LastName { get; }
         public DigitalKey Key { get; private set; }
 
-        public static User Create(string lastName, string firstName)
-        {
-            if (string.IsNullOrWhiteSpace(lastName))
-                throw new ArgumentNullException(nameof(lastName));
-            if (string.IsNullOrWhiteSpace(firstName))
-                throw new ArgumentNullException(nameof(firstName));
+        public Guid Id { get; }
 
-            return new User(lastName, firstName);
+        public static User Create(Guid id, string lastName, string firstName)
+        {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException(nameof(id));
+            }
+            if (string.IsNullOrWhiteSpace(lastName))
+            {
+                throw new ArgumentNullException(nameof(lastName));
+            }
+            if (string.IsNullOrWhiteSpace(firstName))
+            {
+                throw new ArgumentNullException(nameof(firstName));
+            }
+
+            return new User(id, lastName, firstName);
         }
 
         public void SetKey(DigitalKey key)
