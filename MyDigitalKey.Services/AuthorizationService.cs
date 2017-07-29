@@ -33,17 +33,20 @@ namespace MyDigitalKey.Services
 
         public void Revoke(Guid authorizationId)
         {
-            throw new NotImplementedException();
+            var authorization = authorizationRepository.FindById(authorizationId);
+            authorization?.Revoke();            
         }
 
         public void Suspend(Guid authorizationId)
         {
-            throw new NotImplementedException();
+            var authorization = authorizationRepository.FindById(authorizationId);
+            authorization?.Suspend();
         }
 
         public void Resume(Guid authorizationId)
         {
-            throw new NotImplementedException();
+            var authorization = authorizationRepository.FindById(authorizationId);
+            authorization?.Resume();
         }
 
         public bool IsAuthorized(Guid lockId, int digitalKeyBusinessId)
