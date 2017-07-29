@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="row">
-        @using (Html.BeginForm("Insert"))
+        @using (Html.BeginForm())
         {
             <div class="col-md-2">
                 @Html.DropDownListFor(m => m.SelectedUserName, Model.UserNames, "Select User")
