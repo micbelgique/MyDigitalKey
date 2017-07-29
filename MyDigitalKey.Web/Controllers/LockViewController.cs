@@ -9,6 +9,8 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using MyDigitalKey.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.Extensions.Options;
+using MyDigitalKey.Web.Configurations;
 
 namespace MyDigitalKey.Web.Controllers
 {
@@ -16,11 +18,11 @@ namespace MyDigitalKey.Web.Controllers
     {
         private List<LockDto> Locks = new List<LockDto>();
 
-        public LockViewController()
+        public LockViewController(IOptions<AppSettings> optionsAccessor)
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:31672/");
+                client.BaseAddress = new Uri(optionsAccessor.Value.ApiBaseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetStringAsync("api/lock").Result;
