@@ -70,19 +70,27 @@ namespace MyDigitalKey.Web.Controllers
                     }
                     vm.LockNames = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(lockName);
                 }
-                try
+
+                foreach (var autho in Authorizations)
                 {
-                    foreach (var autho in Authorizations)
+                    try
                     {
                         autho.Lock = Locks.First(m => m.Id == autho.Lock.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
+                    }
+                    try
+                    {
                         autho.User = Users.First(m => m.Key.Id == autho.User.Key.Id);
                     }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
-                }
-                vm.Authorizations = Authorizations;
+                    vm.Authorizations = Authorizations;
             }
             return View("Index",vm);
         }
