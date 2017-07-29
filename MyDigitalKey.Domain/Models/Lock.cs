@@ -5,9 +5,9 @@ namespace MyDigitalKey.Domain.Models
 {
     public class Lock : IAggregateRoot
     {
-        private Lock(string name)
+        private Lock(Guid id, string name)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             Name = name;
         }
 
@@ -15,14 +15,18 @@ namespace MyDigitalKey.Domain.Models
 
         public Guid Id { get; }
 
-        public static Lock Create(string name)
+        public static Lock Create(Guid id, string name)
         {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return new Lock(name);
+            return new Lock(id, name);
         }
     }
 }
