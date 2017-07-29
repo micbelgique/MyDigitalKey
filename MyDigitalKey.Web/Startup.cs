@@ -9,6 +9,7 @@ using MyDigitalKey.Persistence.InMemory;
 using MyDigitalKey.Services;
 using MyDigitalKey.Services.Contracts.Interfaces;
 using MyDigitalKey.Web.AutoMapper;
+using MyDigitalKey.Web.Configurations;
 
 namespace MyDigitalKey.Web
 {
@@ -18,8 +19,8 @@ namespace MyDigitalKey.Web
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -31,6 +32,13 @@ namespace MyDigitalKey.Web
         {
             // Add framework services.
             services.AddSingleton(MappingLoader.Load());
+
+            // Adds services required for using options.
+            services.AddOptions();
+
+            // Register the IConfiguration instance which MyOptions binds against.
+            services.Configure<AppSettings>(Configuration);
+
             services.AddMvc();
 
             // Add application services.
