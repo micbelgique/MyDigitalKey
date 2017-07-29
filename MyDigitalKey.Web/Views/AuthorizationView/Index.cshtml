@@ -4,15 +4,67 @@
 }
 
 
-
 <div class="ui masthead vertical segment">
 <div class="ui container">
-    <h1 class="ui header">Users</h1>
-    
+    <h1 class="ui header">Authorizations</h1>
+
+    <table class="ui celled table">
+    <thead>
+        <tr>
+        <th>User</th>
+        <th>Lock</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Suspend/Resume</th>
+        <th>Revoke</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var Authorization in Model.Authorizations)
+        {
+            <tr>
+                <td>@Authorization.User.FirstName @Authorization.User.LastName</td>
+                <td>@Authorization.Lock.Name</td>
+                <td>@Authorization.StartDate</td>
+                <td>
+                    @if (Authorization.EndDate.HasValue)
+                    {
+                        <div>@Authorization.EndDate.Value</div>
+                    }
+                </td>
+                <td>@Html.CheckBoxFor(m=>Authorization.IsActive)</td>
+                <td><input type="button" class="btn" name="RevokeButton" value="Revoke"/></td>
+            </tr>
+        }
+    </tbody>
+    </table>
+    @using (Html.BeginForm("Index", "AuthorizationView", FormMethod.Post, new { @class="ui form" }))
+    {
+        <div class="four fields">
+            <div class="field">
+                <label>User</label>
+                @Html.DropDownListFor(m => m.SelectedUserName, Model.UserNames, "Select User")
+            </div>
+            <div class="field">
+                <label>Lock</label>
+                @Html.DropDownListFor(m => m.SelectedLockName, Model.LockNames, "Select Lock")
+            </div>
+            <div class="field">
+                <label>Start</label>
+                @Html.EditorFor(m=>m.StartDate, new { htmlAttributes = new { @type = "text" } })
+            </div>
+            <div class="field">
+                <label>End</label>
+                @Html.EditorFor(m=>m.EndDate, new { htmlAttributes = new { @type = "text" } })
+            </div>
+        </div>
+
+        <button class="ui button" type="submit">Save</button>
+    }
 </div>
 </div>
-<!--
-<h2>Authorizations</h2>
+
+<!--<h2>Authorizations</h2>
 
 <div class="col-md-12">
     <div class="row">
@@ -83,5 +135,4 @@
         </div>
     </div>
 }
-</div>
--->
+</div>-->

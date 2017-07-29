@@ -104,6 +104,7 @@ namespace MyDigitalKey.Web.Controllers
             vm.Authorizations = Authorizations;
             return View("Index",vm);
         }
+        
         [HttpPost]
         public IActionResult Index(IFormCollection avm)
         {
