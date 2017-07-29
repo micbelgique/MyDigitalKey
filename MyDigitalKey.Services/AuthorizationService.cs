@@ -49,11 +49,10 @@ namespace MyDigitalKey.Services
                     Id = Guid.Parse("5a643ecd-c7ac-40fd-a435-9f5e115f8e4e"),
                     Key = new DigitalKeyDto
                     {
-                        Id = Guid.Parse("8d28f5ba-b5cf-4af4-9694-003778c93b59"),
+                        Id = Guid.Parse("48029810-08ec-4883-bb0d-35d973ac9de3"),
                         BusinessId = 1
                     }
-                },
-                CanOpen = true
+                }
             });
 
             Add(new AuthorizationDto
@@ -67,11 +66,10 @@ namespace MyDigitalKey.Services
                     Id = Guid.Parse("eb01eaa2-8ba9-4469-9d35-747c502b2dd5"),
                     Key = new DigitalKeyDto
                     {
-                        Id = Guid.Parse("a67f4279-41b0-47f6-a936-629602957e47"),
+                        Id = Guid.Parse("1c6683d1-5090-40e6-8098-f1c2660ea50b"),
                         BusinessId = 2
                     }
-                },
-                CanOpen = false
+                }
             });
         }
     }
