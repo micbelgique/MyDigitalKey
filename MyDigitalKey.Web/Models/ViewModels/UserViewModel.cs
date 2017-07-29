@@ -12,6 +12,7 @@ namespace MyDigitalKey.Web.Models.ViewModels
         {
             User = new UserDto();
         }
+
         public string ResearchString { get; set; }
         public UserDto User { get; set; }
     }

@@ -1,60 +1,53 @@
 @model MyDigitalKey.Web.Models.ViewModels.UserViewModel
 @{
     ViewData["Title"] = "User";
-    
 }
-<div class="row">
-    <div class="col-md-3">
-        <div class="row">
-            <div class="jumbotron">
-                <h1>Users</h1>
-            </div>
-        </div>
-        <div class="row">
-            @using (Html.BeginForm())
-            {   
-                <div class="col-md-8">
-                    @Html.TextBoxFor(m => m.ResearchString)
-                </div>
-                <div class="col-md-3">
-                        <input type="submit" value="Search" class="btn btn-default center-block"/>
-                </div>
-            }
-        </div>
-        @foreach (string name in ViewBag.Names)
+
+<div class="ui masthead vertical segment">
+<div class="ui container">
+    <h1 class="ui header">Users</h1>
+
+    <div class="ui middle aligned selection divided list">
+        @foreach (var user in ViewBag.Users)
         {
-            <div class="row">
-                @Html.ActionLink(name,"Details","UserView",new { name},null)
+            <div class="item">
+                <i class="user icon"></i>
+                <div class="content js-user-item">
+                    <div class="header">@user.FirstName @user.LastName</div>
+                </div>
+                <div class="details">
+                
+                @using (Html.BeginForm("Update", "UserView", FormMethod.Post, new { @class="ui form" }))
+                {   
+                    <input type="hidden" name="id" value="@user.Id">
+                    <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="text" name="FirstName" placeholder="First Name"
+                                   value="@user.FirstName">
+                        </div>
+                        <div class="field">
+                            <input type="text" name="LastName" placeholder="Last Name"
+                                   value="@user.LastName">
+                        </div>
+                    </div>
+                    </div>
+                    <div class="field">
+                        <input type="text" name="KeyCode" placeholder="Key code"
+                               value="@user.Key?.BusinessId">
+                    </div>
+                    <button class="ui button" type="submit">Save</button>
+                }
+                    
+                </div>
             </div>
-        }
-        <div class="row">
-            <input type="submit" value="Create New" class="btn btn-default center-block" />
-        </div>
+        }    
     </div>
-    <div class="col-md-9">
-        <br/>
-        @using (Html.BeginForm())
-        {
-            <div class="row">
-                <div class="col-md-4">
-                    @Html.LabelFor(m => m.User.FirstName)
-                    @Html.TextBoxFor(m => m.User.FirstName)
-                </div>
-                <div class="col-md-4">
-                    @Html.LabelFor(m => m.User.LastName)
-                    @Html.TextBoxFor(m => m.User.LastName)
-                </div>
-                <div class="col-md-4">
-                    @Html.LabelFor(m => m.User.Key)
-                    @Html.DisplayTextFor(m => m.User.Key)
-                </div>
-            </div>
-            <div class="row">
-                <input type="submit" value="Save Changes" class="btn btn-default pull-right" /> 
-            </div>
-        }
-        
+    <div class="ui raised segment">
+        <button class="ui right labeled icon button">
+        <i class="plus icon"></i>
+        Add
+        </button>
     </div>
 </div>
-
-
+</div>

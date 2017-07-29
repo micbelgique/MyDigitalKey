@@ -36,11 +36,19 @@ namespace MyDigitalKey.Web.Controllers
             {
                 names.Add(user.FirstName + " " + user.LastName);
             }
+            ViewBag.Users = users;
             ViewBag.Names = names;
             return View(vm);
         }
 
-        public IActionResult Search(string search)
+        [HttpPost]
+        public IActionResult Update(Guid id, string firstName, string lastName, int keyCode)
+        {
+            ViewBag.Users = users;
+            return View(nameof(Index));
+        }
+
+        /*public IActionResult Search(string search)
         {
             var vm = new UserViewModel();
             vm.User = users.First(m => (m.FirstName.ToLower() + " " + m.LastName.ToLower()).Contains(search.ToLower()));
@@ -64,6 +72,6 @@ namespace MyDigitalKey.Web.Controllers
             }
             ViewBag.Names = names;
             return View("Index", vm);
-        }
+        }*/
     }
 }

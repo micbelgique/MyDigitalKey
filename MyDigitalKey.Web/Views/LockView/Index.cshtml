@@ -3,6 +3,33 @@
     ViewData["Title"] = "Lock";
 
 }
+<div class="ui masthead vertical segment">
+<div class="ui container">
+    <h1 class="ui header">My locks</h1>
+
+    <div class="ui middle aligned selection divided list">
+        @foreach (string name in ViewBag.LocksName)
+        {
+            <div class="item">
+                <i class="lock icon"></i>
+                <div class="content">
+                   @Html.ActionLink(name, "Details", "LockView", new { name }, new { @class="header" })
+                </div>
+            </div>
+        }    
+    </div>
+</div>
+</div>
+
+
+<!--
+@foreach (string name in ViewBag.LocksName)
+{
+    <div class="row">
+        @Html.ActionLink(name, "Details", "LockView", new { name }, null)
+    </div>
+}
+
 <div class="row">
     <div class="col-md-3">
         <div class="row">
@@ -42,4 +69,4 @@
 
     </div>
 </div>
-
+-->
