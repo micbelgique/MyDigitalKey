@@ -4,6 +4,7 @@
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Properties\PublishProfiles\mydigitalkey - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\MyDigitalKeyWeb - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
@@ -29,6 +30,7 @@
     <ProjectReference Include="..\MyDigitalKey.Services\MyDigitalKey.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\LockView\" />
     <Folder Include="Views\AuthorizationView\" />
     <Folder Include="Views\UserView\" />
