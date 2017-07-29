@@ -25,11 +25,39 @@ namespace MyDigitalKey.Web.Controllers.Api
             return authorizationService.IsAuthorized(lockId, digitalKeyBusinessId);
         }
 
+        // POST api/authorization
+        [HttpPost]
+        public void Post([FromBody] AuthorizationDto authorizationDto)
+        {
+            authorizationService.Add(authorizationDto);
+        }
+
         // GET api/authorization
         [HttpGet]
         public IEnumerable<AuthorizationDto> Get()
         {
             return authorizationService.FindAll();
+        }
+
+        // PUT api/authorization/revoke
+        [HttpPut(nameof(Revoke))]
+        public void Revoke([FromBody] Guid authorizationId)
+        {
+            authorizationService.Revoke(authorizationId);
+        }
+
+        // PUT api/authorization/resume
+        [HttpPut(nameof(Resume))]
+        public void Resume([FromBody] Guid authorizationId)
+        {
+            authorizationService.Resume(authorizationId);
+        }
+
+        // PUT api/authorization/suspsend
+        [HttpPut(nameof(Suspend))]
+        public void Suspend([FromBody] Guid authorizationId)
+        {
+            authorizationService.Suspend(authorizationId);
         }
     }
 }

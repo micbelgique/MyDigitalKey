@@ -11,6 +11,9 @@ using MyDigitalKey.Web.Models.ViewModels;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MyDigitalKey.Web.Configurations;
+using Microsoft.AspNetCore.Http;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace MyDigitalKey.Web.Controllers
 {
@@ -19,11 +22,13 @@ namespace MyDigitalKey.Web.Controllers
         private List<AuthorizationDto> Authorizations { get; set; }
         private List<UserDto> Users { get; set; }
         private List<LockDto> Locks { get; set; }
+        public string ApiBaseAddress { get; set; }
         public AuthorizationViewController(IOptions<AppSettings> optionsAccessor)
         {
+            ApiBaseAddress = optionsAccessor.Value.ApiBaseAddress;
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(optionsAccessor.Value.ApiBaseAddress);
+                client.BaseAddress = new Uri(ApiBaseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 string response = "";
@@ -69,7 +74,7 @@ namespace MyDigitalKey.Web.Controllers
                     }
                     try
                     {
-                        autho.User = Users.First(m => m.Key.Id == autho.User.Key.Id);
+                        autho.User = Users.First(m => (m.Key!= null) &&  (m.Key.Id == autho.User.Key.Id));
                     }
                     catch (Exception ex)
                     {
@@ -79,6 +84,7 @@ namespace MyDigitalKey.Web.Controllers
                 
             }
         }
+        [HttpGet]
         public IActionResult Index()
         {
             AuthorizationsViewModel vm = new AuthorizationsViewModel();
@@ -100,6 +106,78 @@ namespace MyDigitalKey.Web.Controllers
             }
             vm.Authorizations = Authorizations;
             return View("Index",vm);
+        }
+        [HttpPost]
+        public IActionResult Index(IFormCollection avm)
+        {
+            var newAuth = new AuthorizationDto();
+            foreach(var key in avm.Keys)
+            {
+                var val = avm[key];
+                try
+                {
+                    switch (key)
+                    {
+                        case "SelectedUserName":
+                            newAuth.User = Users.First(m => (m.FirstName + " " + m.LastName).Equals((string)val));
+                            break;
+                        case "SelectedLockName":
+                            newAuth.Lock = Locks.First(m => m.Name.Equals((string)val));
+                            break;
+                        case "StartDate":
+                            {
+                                Regex rex = new Regex("(\\d+)-(\\d+)-(\\d+)T(\\d+):(\\d+):(\\d+).(\\d+).(.*)");
+                                var matches = rex.Matches((string)val);
+                                var match = matches[0];
+
+                                newAuth.StartDate = new DateTime(int.Parse(match.Groups[1].Value),
+                                                                int.Parse(match.Groups[2].Value),
+                                                                int.Parse(match.Groups[3].Value),
+                                                                int.Parse(match.Groups[4].Value),
+                                                                int.Parse(match.Groups[5].Value),
+                                                                int.Parse(match.Groups[6].Value));
+                            }
+                            break;
+                        case "EndDate":
+                            if (!string.IsNullOrEmpty(val))
+                            {
+                                Regex rex = new Regex("(\\d+)-(\\d+)-(\\d+)T(\\d+):(\\d+):(\\d+).(\\d+).(.*)");
+                                var matches = rex.Matches((string)val);
+                                var match = matches[0];
+
+                                newAuth.StartDate = new DateTime(int.Parse(match.Groups[1].Value),
+                                                                int.Parse(match.Groups[2].Value),
+                                                                int.Parse(match.Groups[3].Value),
+                                                                int.Parse(match.Groups[4].Value),
+                                                                int.Parse(match.Groups[5].Value),
+                                                                int.Parse(match.Groups[6].Value));
+                            }
+                            break;
+                    }
+                }
+               catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
+                }
+            }
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var rawContent = JsonConvert.SerializeObject(newAuth);
+                HttpContent content = new ByteArrayContent(Encoding.UTF8.GetBytes(rawContent));
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                try
+                {
+                    client.PostAsync("api/authorization", content);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
+                }
+            }
+            return Index();
         }
     }
 }
