@@ -75,7 +75,7 @@ namespace MyDigitalKey.Web.Controllers
                     foreach (var autho in Authorizations)
                     {
                         autho.Lock = Locks.First(m => m.Id == autho.Lock.Id);
-                        autho.User = Users.First(m => m.Key.BusinessId == autho.User.Key.BusinessId);
+                        autho.User = Users.First(m => m.Key.Id == autho.User.Key.Id);
                     }
                 }
                 catch (Exception ex)
