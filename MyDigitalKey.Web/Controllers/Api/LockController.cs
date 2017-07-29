@@ -20,7 +20,7 @@ namespace MyDigitalKey.Web.Controllers.Api
         [HttpPost]
         public void Post([FromBody] LockDto lockDto)
         {
-            lockService.Register(lockDto.Id, lockDto.Name);
+            lockService.Register(lockDto.Id,lockDto.Name);
         }
 
         // GET api/lock

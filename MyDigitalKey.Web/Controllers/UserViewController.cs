@@ -20,7 +20,7 @@ namespace MyDigitalKey.Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:31672/");
+                client.BaseAddress = new Uri(optionsAccessor.Value.ApiBaseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetStringAsync("api/user").Result;
