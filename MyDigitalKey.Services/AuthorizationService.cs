@@ -31,7 +31,11 @@ namespace MyDigitalKey.Services
 
         public void Add(AuthorizationDto authorizationDto)
         {
-            var authorization = Authorization.Create(authorizationDto.Lock.Id, authorizationDto.User.Key.Id, authorizationDto.IsActive);            
+            if (authorizationRepository.FindAll().Any(x => x.LockId == authorizationDto.Lock.Id && (x.DigitalKeyId == authorizationDto.User.Key.Id && x.IsActive || (!x.IsActive && !x.EndDate.HasValue))))
+            {
+                return;
+            }
+            var authorization = Authorization.Create(authorizationDto.Lock.Id, authorizationDto.User.Key.Id, authorizationDto.IsActive);
             authorizationRepository.Add(authorization);
         }
 
@@ -60,12 +64,13 @@ namespace MyDigitalKey.Services
             {
                 return false;
             }
-            var authorization = authorizationRepository.FindAll().SingleOrDefault(x => x.LockId == lockId && x.DigitalKeyId == user.Key.Id);
+            var authorization = authorizationRepository.FindAll().SingleOrDefault(x => x.LockId == lockId && x.DigitalKeyId == user.Key.Id && x.IsActive);
 
             if (authorization == null)
             {
                 return false;
             }
+
             if (!authorization.IsActive)
             {
                 return false;
@@ -82,6 +87,11 @@ namespace MyDigitalKey.Services
                 return true;
             }
             return false;
-        }        
+        }
+
+        public void Clear()
+        {
+            authorizationRepository.Clear();
+        }
     }
 }
