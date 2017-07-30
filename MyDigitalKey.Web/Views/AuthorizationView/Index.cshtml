@@ -32,7 +32,23 @@
                         <div>@Authorization.EndDate.Value</div>
                     }
                 </td>
-                <td>@Html.CheckBoxFor(m=>Authorization.IsActive)</td>
+                <td>
+                    @if(Authorization.IsActive)
+                    {
+                        @using(Html.BeginForm("Suspend", "AuthorizationView", FormMethod.Post, new {}))
+                        {
+                            <input type="hidden" name="id" value="@Authorization.Id" >
+                            <input type="submit" class="ui button"  value="Suspend"/>
+                        }
+                    }
+                    else
+                    {
+                        @using(Html.BeginForm("Resume", "AuthorizationView", FormMethod.Post, new {}))
+                        {
+                            <input type="hidden" name="id" value="@Authorization.Id" >
+                            <input type="submit" class="ui button" value="Resume"/>
+                        }
+                    }
                 <td>
                     @using(Html.BeginForm("Revoke", "AuthorizationView", FormMethod.Post, new {}))
                     {
@@ -44,8 +60,11 @@
         }
     </tbody>
     </table>
+
+    <div class="ui raised segment">
     @using (Html.BeginForm("Index", "AuthorizationView", FormMethod.Post, new { @class="ui form" }))
     {
+        <h4 class="ui dividing header">New authorization</h4>
         <div class="four fields">
             <div class="field">
                 <label>User</label>
@@ -67,5 +86,6 @@
 
         <button class="ui button" type="submit">Save</button>
     }
+    </div>
 </div>
 </div>

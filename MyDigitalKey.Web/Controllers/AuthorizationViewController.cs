@@ -59,6 +59,7 @@ namespace MyDigitalKey.Web.Controllers
         [HttpPost]
         public IActionResult Index(IFormCollection avm)
         {
+            LoadData();
             var newAuth = new AuthorizationDto();
             foreach(var key in avm.Keys)
             {
@@ -130,8 +131,6 @@ namespace MyDigitalKey.Web.Controllers
             return Index();
         }
 
-
-        
         [HttpPost]
         public IActionResult Revoke(Guid id)
         {
@@ -157,6 +156,59 @@ namespace MyDigitalKey.Web.Controllers
         
             return Index();
         }
+
+        [HttpPost]
+        public IActionResult Suspend(Guid id)
+        {
+            ApiBaseAddress = _optionsAccessor.Value.ApiBaseAddress;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var rawContent = JsonConvert.SerializeObject(id);
+                HttpContent content = new ByteArrayContent(Encoding.UTF8.GetBytes(rawContent));
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                try
+                {
+                    var response = client.PutAsync("api/authorization/suspend", content).Result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Suspend) : " + ex.Message + "\n" + ex.StackTrace);
+                } 
+                
+            }
+        
+            return Index();
+        }
+
+        [HttpPost]
+        public IActionResult Resume(Guid id)
+        {
+            ApiBaseAddress = _optionsAccessor.Value.ApiBaseAddress;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var rawContent = JsonConvert.SerializeObject(id);
+                HttpContent content = new ByteArrayContent(Encoding.UTF8.GetBytes(rawContent));
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                try
+                {
+                    var response = client.PutAsync("api/authorization/resume", content).Result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Resume) : " + ex.Message + "\n" + ex.StackTrace);
+                } 
+                
+            }
+        
+            return Index();
+        }
+
 
         private void LoadData()
         {
