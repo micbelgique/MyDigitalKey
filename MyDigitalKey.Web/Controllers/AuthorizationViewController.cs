@@ -59,6 +59,7 @@ namespace MyDigitalKey.Web.Controllers
         [HttpPost]
         public IActionResult Index(IFormCollection avm)
         {
+            LoadData();
             var newAuth = new AuthorizationDto();
             foreach(var key in avm.Keys)
             {
