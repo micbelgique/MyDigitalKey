@@ -33,7 +33,13 @@
                     }
                 </td>
                 <td>@Html.CheckBoxFor(m=>Authorization.IsActive)</td>
-                <td><input type="button" class="btn" name="RevokeButton" value="Revoke"/></td>
+                <td>
+                    @using(Html.BeginForm("Revoke", "AuthorizationView", FormMethod.Post, new {}))
+                    {
+                        <input type="hidden" name="id" value="@Authorization.Id">
+                        <input type="submit" class="ui button" name="RevokeButton" value="Revoke"/>
+                    }
+                </td>
             </tr>
         }
     </tbody>
