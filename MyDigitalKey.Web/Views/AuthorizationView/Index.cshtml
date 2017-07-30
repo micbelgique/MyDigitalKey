@@ -23,8 +23,12 @@
         @foreach (var Authorization in Model.Authorizations)
         {
             var disabled = (!Authorization.IsActive && Authorization.EndDate != null) ? "disabled" : "";
-            var active = (!Authorization.IsActive  && Authorization.EndDate != null) ? "negative" : "positive";
-            
+            var active = "positive";
+            if(!Authorization.IsActive) 
+            {
+                active = (Authorization.EndDate == null) ? "warning" : "negative";
+            }
+
             <tr class="@active">
                 <td>@Authorization.User.FirstName @Authorization.User.LastName</td>
                 <td>@Authorization.Lock.Name</td>
