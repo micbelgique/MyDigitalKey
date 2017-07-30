@@ -19,74 +19,22 @@ namespace MyDigitalKey.Web.Controllers
 {
     public class AuthorizationViewController : Controller
     {
+        private IOptions<AppSettings> _optionsAccessor;
         private List<AuthorizationDto> Authorizations { get; set; }
         private List<UserDto> Users { get; set; }
         private List<LockDto> Locks { get; set; }
         public string ApiBaseAddress { get; set; }
+    
+
         public AuthorizationViewController(IOptions<AppSettings> optionsAccessor)
         {
-            ApiBaseAddress = optionsAccessor.Value.ApiBaseAddress;
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ApiBaseAddress);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                string response = "";
-                try
-                {
-                    response = client.GetStringAsync("api/lock").Result;
-                    Locks = JsonConvert.DeserializeObject<List<LockDto>>(response);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
-                }
-                try
-                {
-                    response = client.GetStringAsync("api/user").Result;
-                    Users = JsonConvert.DeserializeObject<List<UserDto>>(response);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
-                }
-                try
-                {
-                    response = client.GetStringAsync("api/authorization").Result;
-                    Authorizations = JsonConvert.DeserializeObject<List<AuthorizationDto>>(response);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
-                }
-
-                
-
-                foreach (var autho in Authorizations)
-                {
-                    try
-                    {
-                        autho.Lock = Locks.First(m => m.Id == autho.Lock.Id);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
-                    }
-                    try
-                    {
-                        autho.User = Users.First(m => (m.Key!= null) &&  (m.Key.Id == autho.User.Key.Id));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
-                    }
-                }
-                
-            }
+            this._optionsAccessor = optionsAccessor;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
+            LoadData(); 
             AuthorizationsViewModel vm = new AuthorizationsViewModel();
             {
                 List<string> userNames = new List<string>();
@@ -178,7 +126,96 @@ namespace MyDigitalKey.Web.Controllers
                     Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
                 }
             }
+            LoadData();
             return Index();
+        }
+
+
+        
+        [HttpPost]
+        public IActionResult Revoke(Guid id)
+        {
+            ApiBaseAddress = _optionsAccessor.Value.ApiBaseAddress;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var rawContent = JsonConvert.SerializeObject(id);
+                HttpContent content = new ByteArrayContent(Encoding.UTF8.GetBytes(rawContent));
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                try
+                {
+                    var response = client.PutAsync("api/authorization/revoke", content).Result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Revoke) : " + ex.Message + "\n" + ex.StackTrace);
+                } 
+                
+            }
+        
+            return Index();
+        }
+
+        private void LoadData()
+        {
+            ApiBaseAddress = _optionsAccessor.Value.ApiBaseAddress;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string response = "";
+                try
+                {
+                    response = client.GetStringAsync("api/lock").Result;
+                    Locks = JsonConvert.DeserializeObject<List<LockDto>>(response);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
+                }
+                try
+                {
+                    response = client.GetStringAsync("api/user").Result;
+                    Users = JsonConvert.DeserializeObject<List<UserDto>>(response);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
+                }
+                try
+                {
+                    response = client.GetStringAsync("api/authorization").Result;
+                    Authorizations = JsonConvert.DeserializeObject<List<AuthorizationDto>>(response);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
+                }
+
+                foreach (var autho in Authorizations)
+                {
+                    try
+                    {
+                        autho.Lock = Locks.First(m => m.Id == autho.Lock.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
+                    }
+                    try
+                    {
+                        autho.User = Users.First(m => (m.Key!= null) &&  (m.Key.Id == autho.User.Key.Id));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
+                    }
+                }
+                
+            }
         }
     }
 }
