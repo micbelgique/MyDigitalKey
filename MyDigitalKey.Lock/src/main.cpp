@@ -143,7 +143,7 @@ bool isAuthorized(int rfid)
 {
     setColor(255, 168, 0);
     HTTPClient client;
-    client.begin("http://mydigitalkeyweb.azurewebsites.net/api/authorization/" + String(GUID) + "/" + rfid);
+    client.begin("http://mydigitalkey.azurewebsites.net/api/authorization/" + String(GUID) + "/" + rfid);
     client.GET();
     String s = client.getString();
     client.end();
