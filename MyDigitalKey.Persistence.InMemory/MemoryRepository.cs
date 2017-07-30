@@ -24,6 +24,11 @@ namespace MyDigitalKey.Persistence.InMemory
             Entities.Remove(entity);
         }
 
+        public void Clear()
+        {
+            Entities.Clear();
+        }
+
         public TEntity FindById(Guid id)
         {
             return Entities.FirstOrDefault(x => x.Id == id);

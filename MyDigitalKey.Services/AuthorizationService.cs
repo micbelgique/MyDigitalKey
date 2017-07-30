@@ -88,5 +88,10 @@ namespace MyDigitalKey.Services
             }
             return false;
         }
+
+        public void Clear()
+        {
+            authorizationRepository.Clear();
+        }
     }
 }

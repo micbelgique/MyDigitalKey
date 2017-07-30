@@ -12,5 +12,6 @@ namespace MyDigitalKey.Services.Contracts.Interfaces
         void Revoke(Guid authorizationId);
         void Suspend(Guid authorizationId);
         void Resume(Guid authorizationId);
+        void Clear();
     }
 }

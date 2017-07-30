@@ -9,5 +9,6 @@ namespace MyDigitalKey.Domain.Interfaces
         IEnumerable<TEntity> FindAll();
         void Add(TEntity entity);
         void Remove(TEntity entity);
+        void Clear();
     }
 }

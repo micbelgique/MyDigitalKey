@@ -53,11 +53,18 @@ namespace MyDigitalKey.Web.Controllers.Api
             authorizationService.Resume(authorizationId);
         }
 
-        // PUT api/authorization/suspsend
+        // PUT api/authorization/suspend
         [HttpPut(nameof(Suspend))]
         public void Suspend([FromBody] Guid authorizationId)
         {
             authorizationService.Suspend(authorizationId);
+        }
+
+        // PUT api/authorization/clear
+        [HttpPut(nameof(Clear))]
+        public void Clear()
+        {
+            authorizationService.Clear();
         }
     }
 }
