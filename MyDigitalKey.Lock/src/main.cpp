@@ -93,6 +93,7 @@ void loop()
 
     if(found)
     {
+        Serial.printf("%d\n", rfid);
         if(isAuthorized(rfid))
         {
             open();
