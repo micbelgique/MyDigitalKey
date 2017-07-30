@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using MyDigitalKey.Domain.Interfaces;
 using MyDigitalKey.Domain.Models;
@@ -12,11 +13,16 @@ namespace MyDigitalKey.Services
     {
         private readonly IRepository<Authorization> authorizationRepository;
         private readonly IMapper mapper;
+        private readonly IRepository<User> userRepository;
 
-        public AuthorizationService(IMapper mapper, IRepository<Authorization> authorizationRepository)
+        public AuthorizationService(IMapper mapper,
+            IRepository<Authorization> authorizationRepository,
+            IRepository<User> userRepository)
         {
             this.mapper = mapper;
             this.authorizationRepository = authorizationRepository;
+            this.userRepository = userRepository;
+
             CreateSampleAuthorization();
         }
 
@@ -34,7 +40,7 @@ namespace MyDigitalKey.Services
         public void Revoke(Guid authorizationId)
         {
             var authorization = authorizationRepository.FindById(authorizationId);
-            authorization?.Revoke();            
+            authorization?.Revoke();
         }
 
         public void Suspend(Guid authorizationId)
@@ -51,7 +57,33 @@ namespace MyDigitalKey.Services
 
         public bool IsAuthorized(Guid lockId, int digitalKeyBusinessId)
         {
-            return true;
+            var user = userRepository.FindAll().SingleOrDefault(x => x.Key.BusinessId == digitalKeyBusinessId);
+            if (user == null)
+            {
+                return false;
+            }
+            var authorization = authorizationRepository.FindAll().SingleOrDefault(x => x.LockId == lockId && x.DigitalKeyId == user.Key.Id);
+
+            if (authorization == null)
+            {
+                return false;
+            }
+            if (!authorization.IsActive)
+            {
+                return false;
+            }
+
+            var now = DateTime.Now;
+
+            if (now >= authorization.StartDate)
+            {
+                if (authorization.EndDate.HasValue && now > authorization.EndDate.Value)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
 
         private void CreateSampleAuthorization()

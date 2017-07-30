@@ -17,7 +17,7 @@ namespace MyDigitalKey.Domain.Models
         public Guid LockId { get; }
 
         public DateTime StartDate { get; }
-        public DateTime EndDate { get; private set; }
+        public DateTime? EndDate { get; private set; }
         public bool IsActive { get; private set; }
         public Guid Id { get; }
 
