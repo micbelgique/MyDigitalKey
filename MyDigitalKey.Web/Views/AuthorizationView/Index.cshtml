@@ -32,7 +32,23 @@
                         <div>@Authorization.EndDate.Value</div>
                     }
                 </td>
-                <td>@Html.CheckBoxFor(m=>Authorization.IsActive)</td>
+                <td>
+                    @if(Authorization.IsActive)
+                    {
+                        @using(Html.BeginForm("Suspend", "AuthorizationView", FormMethod.Post, new {}))
+                        {
+                            <input type="hidden" name="id" value="@Authorization.Id" >
+                            <input type="submit" class="ui button"  value="Suspend"/>
+                        }
+                    }
+                    else
+                    {
+                        @using(Html.BeginForm("Resume", "AuthorizationView", FormMethod.Post, new {}))
+                        {
+                            <input type="hidden" name="id" value="@Authorization.Id" >
+                            <input type="submit" class="ui button" value="Resume"/>
+                        }
+                    }
                 <td>
                     @using(Html.BeginForm("Revoke", "AuthorizationView", FormMethod.Post, new {}))
                     {
