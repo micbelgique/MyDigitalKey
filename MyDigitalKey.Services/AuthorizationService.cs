@@ -55,7 +55,7 @@ namespace MyDigitalKey.Services
 
         public bool IsAuthorized(Guid lockId, int digitalKeyBusinessId)
         {
-            var user = userRepository.FindAll().SingleOrDefault(x => x.Key.BusinessId == digitalKeyBusinessId);
+            var user = userRepository.FindAll().SingleOrDefault(x => x.Key != null && x.Key.BusinessId == digitalKeyBusinessId);
             if (user == null)
             {
                 return false;
