@@ -5,10 +5,11 @@ namespace MyDigitalKey.Domain.Models
 {
     public class Authorization : IAggregateRoot
     {
-        private Authorization(Guid digitalKeyId, Guid lockId)
+        private Authorization(Guid digitalKeyId, Guid lockId, bool isActive)
         {
             DigitalKeyId = digitalKeyId;
             LockId = lockId;
+            IsActive = isActive;
             Id = Guid.NewGuid();
             StartDate = DateTime.Now;
         }
@@ -21,9 +22,9 @@ namespace MyDigitalKey.Domain.Models
         public bool IsActive { get; private set; }
         public Guid Id { get; }
 
-        public static Authorization Create(Guid lockId, Guid digitalKeyId)
+        public static Authorization Create(Guid lockId, Guid digitalKeyId, bool isActive)
         {
-            return new Authorization(digitalKeyId, lockId);
+            return new Authorization(digitalKeyId, lockId, isActive);
         }
 
         public void Revoke()
