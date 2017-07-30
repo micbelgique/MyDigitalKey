@@ -33,12 +33,15 @@
                     }
                 </td>
                 <td>
+                    @{
+                        var disabled = (Authorization.IsActive) ? "" : "disabled";
+                    }
                     @if(Authorization.IsActive)
                     {
                         @using(Html.BeginForm("Suspend", "AuthorizationView", FormMethod.Post, new {}))
                         {
                             <input type="hidden" name="id" value="@Authorization.Id" >
-                            <input type="submit" class="ui button"  value="Suspend"/>
+                            <input type="submit" class="ui button"  value="Suspend" @disabled/>
                         }
                     }
                     else
@@ -46,14 +49,14 @@
                         @using(Html.BeginForm("Resume", "AuthorizationView", FormMethod.Post, new {}))
                         {
                             <input type="hidden" name="id" value="@Authorization.Id" >
-                            <input type="submit" class="ui button" value="Resume"/>
+                            <input type="submit" class="ui button" value="Resume" @disabled/>
                         }
                     }
                 <td>
                     @using(Html.BeginForm("Revoke", "AuthorizationView", FormMethod.Post, new {}))
                     {
                         <input type="hidden" name="id" value="@Authorization.Id">
-                        <input type="submit" class="ui button" name="RevokeButton" value="Revoke"/>
+                        <input type="submit" class="ui button" name="RevokeButton" value="Revoke" @disabled/>
                     }
                 </td>
             </tr>
