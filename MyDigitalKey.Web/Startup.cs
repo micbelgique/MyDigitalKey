@@ -81,7 +81,7 @@ namespace MyDigitalKey.Web
             {
                 routes.MapRoute(
                     "default",
-                    "{controller=Home}/{action=Index}/{id?}");
+                    "{controller=AuthorizationView}/{action=Index}/{id?}");
             });
         }
     }
