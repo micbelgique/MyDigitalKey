@@ -61,6 +61,7 @@ namespace MyDigitalKey.Web.Controllers
         {
             LoadData();
             var newAuth = new AuthorizationDto();
+            newAuth.IsActive = true;
             foreach(var key in avm.Keys)
             {
                 var val = avm[key];
