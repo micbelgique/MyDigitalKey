@@ -127,7 +127,6 @@ namespace MyDigitalKey.Web.Controllers
                     Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Index) : " + ex.Message + "\n" + ex.StackTrace);
                 }
             }
-            LoadData();
             return Index();
         }
 
