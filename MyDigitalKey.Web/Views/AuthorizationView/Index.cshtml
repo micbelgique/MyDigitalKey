@@ -22,7 +22,10 @@
     <tbody>
         @foreach (var Authorization in Model.Authorizations)
         {
-            <tr>
+            var disabled = (!Authorization.IsActive && Authorization.EndDate != null) ? "disabled" : "";
+            var active = (!Authorization.IsActive  && Authorization.EndDate != null) ? "negative" : "positive";
+            
+            <tr class="@active">
                 <td>@Authorization.User.FirstName @Authorization.User.LastName</td>
                 <td>@Authorization.Lock.Name</td>
                 <td>@Authorization.StartDate</td>
@@ -33,9 +36,6 @@
                     }
                 </td>
                 <td>
-                    @{
-                        var disabled = (Authorization.IsActive) ? "" : "disabled";
-                    }
                     @if(Authorization.IsActive)
                     {
                         @using(Html.BeginForm("Suspend", "AuthorizationView", FormMethod.Post, new {}))
