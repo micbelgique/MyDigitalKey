@@ -29,12 +29,12 @@ namespace MyDigitalKey.Web.Controllers
         public AuthorizationViewController(IOptions<AppSettings> optionsAccessor)
         {
             this._optionsAccessor = optionsAccessor;
-            LoadData(); 
         }
 
         [HttpGet]
         public IActionResult Index()
         {
+            LoadData(); 
             AuthorizationsViewModel vm = new AuthorizationsViewModel();
             {
                 List<string> userNames = new List<string>();
@@ -127,6 +127,34 @@ namespace MyDigitalKey.Web.Controllers
                 }
             }
             LoadData();
+            return Index();
+        }
+
+
+        
+        [HttpPost]
+        public IActionResult Revoke(Guid id)
+        {
+            ApiBaseAddress = _optionsAccessor.Value.ApiBaseAddress;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var rawContent = JsonConvert.SerializeObject(id);
+                HttpContent content = new ByteArrayContent(Encoding.UTF8.GetBytes(rawContent));
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                try
+                {
+                    var response = client.PutAsync("api/authorization/revoke", content).Result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now + ": (AuthorizationViewController) : (Revoke) : " + ex.Message + "\n" + ex.StackTrace);
+                } 
+                
+            }
+        
             return Index();
         }
 
