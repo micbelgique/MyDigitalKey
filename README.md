@@ -1,6 +1,12 @@
 ## DevCamp2017-Team8
 # My Digital Key
 
+### The team
+* Romain Quinet
+* Duy Nguyen
+* Augustin
+* Barbara Linon
+
 ### In a nutshell
 My Digital Key is a hackaton's project whose aim is to allow the opening of connected locks with RFID badges. Those openings should be controllable with Authorizations set on a website.
 
